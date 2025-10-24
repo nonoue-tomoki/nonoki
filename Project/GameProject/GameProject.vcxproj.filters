@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Game\Player.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Base.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Map.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen\Title.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen\Result.h">
+      <Filter>Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Block.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Game\Player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Base.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Map.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen\Title.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen\Result.cpp">
+      <Filter>Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Block.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Game">
+      <UniqueIdentifier>{7a4b0461-5208-40a3-b6e5-35bbe25ad25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{edaaa305-fd6c-4028-a403-a8d1552483f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Screen">
+      <UniqueIdentifier>{fa4593bf-1f4d-4dc5-9f72-b793bb5e864a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
