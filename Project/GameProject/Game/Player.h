@@ -6,9 +6,10 @@ private:
     enum {
         eAnimIdle = 0,
         eAnimRun,
+        eAnimGrab,
+        eAnimDash,  
         eAnimJumpUp,
         eAnimJumpDown,
-        eAnimAttack01,
         eAnimDamage,
         eAnimDown,
     };
@@ -33,7 +34,6 @@ public:
 	void Draw();
 	void Update();
 	void Collision(Base* b);
-
 
 	void StateIdle();
 	void StateRun();

@@ -16,3 +16,23 @@ void Player::Collision(Base* b) {
 
 }
 
+void Player::StateIdle()
+{
+}
+
+void Player::StateRun()
+{
+}
+
+void Player::StateDash()
+{
+}
+
+void Player::StateGrab()
+{
+}
+
+void Player::StateDown()
+{
+}
+
