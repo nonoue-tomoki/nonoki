@@ -7,6 +7,8 @@ const int   DASH_TIME = 10;
 const float CLIMB_SPEED = 3.0f;
 const float WALL_JUMP_X = 8.0f;
 
+Player::Player(const CVector2D& p, bool flip) :Base(eType_Player) {
+
 
 Player::Player(const CVector2D& pos, bool flip) :Base(eType_Player)
 {
@@ -31,6 +33,7 @@ Player::Player(const CVector2D& pos, bool flip) :Base(eType_Player)
     m_flip = flip;
 }
 
+void Player::Draw() {
 void Player::Update()
 {
     switch (m_state) {
@@ -48,6 +51,7 @@ void Player::Update()
     m_is_wall = false;
 }
 
+void Player::Update() {
 void Player::UpdateInputState()
 {
     bool currentJumpHold = HOLD(CInput::eButton3);
@@ -59,6 +63,7 @@ void Player::UpdateInputState()
     m_prevDashHold = currentDashHold;
 }
 
+void Player::Collision(Base* b) {
 void Player::UpdateNormal()
 {
     m_vec.y -= GRAVITY;
@@ -111,6 +116,7 @@ void Player::UpdateNormal()
         m_vec = CVector2D(0, 0);
     }
 }
+
 
 void Player::UpdateDash()
 {
