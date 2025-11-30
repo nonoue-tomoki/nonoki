@@ -1,11 +1,12 @@
 #include "Player.h"
 
-Player::Player(const CVector2D& p, bool flip) :Base(eType_Player) {
+Player::Player(const CVector2D& pos, bool flip) :Base(eType_Player) {
 
 }
 
 void Player::Draw() {
-
+	m_img.Draw();
+	
 }
 
 void Player::Update() {

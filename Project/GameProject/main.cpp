@@ -93,6 +93,11 @@ void Init(void)
 	//‰Šú‰»‚Ì–½—ß‚ğ‘‚­
 	//ƒQ[ƒ€‹N“®‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
+	
+	
+	
+	
+	Base::Add(new Title);
 
 
 
@@ -251,7 +256,7 @@ int __main(int* argcp, char** argv) {
 	return 0;
 }
 
-INT WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR argv, INT argc)
+INT WINAPI	WinMain(HINSTANCE, HINSTANCE, LPSTR argv, INT argc)
 {
 	return __main(&__argc, __argv);
 }
