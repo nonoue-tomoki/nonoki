@@ -24,6 +24,7 @@ void MainLoop(void) {
 
 void Init(void)
 {
+
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
 	glEnable(GL_DEPTH_TEST);
@@ -94,14 +95,16 @@ void Init(void)
 	//ƒQ[ƒ€‹N“®‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
 
+	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png"),128, 128);
 
 
 
 
+	Base::Add(new Player(CVector2D(100,200),true));
 
-
-
-
+	Base::Add(new Block(CVector2D(300, 16), 600, 32));
+	Base::Add(new Block(CVector2D(500, 150), 100, 20));
+	Base::Add(new Block(CVector2D(700, 100), 32, 200));
 
 }
 
