@@ -2,7 +2,6 @@
 #include "Game/Map.h"
 #include "Game/Player.h"
 #include "Game/Game.h"
-#include "Game/Block.h"
 #include "Game/Item.h"
 #include "Screen/Result.h"
 #include "Screen/Title.h"
@@ -95,22 +94,15 @@ void Init(void)
 	//ƒQ[ƒ€‹N“®‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
 	
-	
-	
-	
-	Base::Add(new Title);
+	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png"),60, 60);
+	ADD_RESOURCE("MapTile", CImage::CreateImage("Image/Block.png"), 60, 60);
 
-	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png"),128, 128);
+	Base::Add(new Map());
 
+	float start_x = 2.5f * TILE_SIZE;
+	float start_y = 15.5f * TILE_SIZE;
 
-
-
-	Base::Add(new Player(CVector2D(100,200),true));
-
-	Base::Add(new Block(CVector2D(300, 16), 600, 32));
-	Base::Add(new Block(CVector2D(500, 150), 100, 20));
-	Base::Add(new Block(CVector2D(700, 100), 32, 200));
-
+	Base::Add(new Player(CVector2D(start_x, start_y), false));
 }
 
 

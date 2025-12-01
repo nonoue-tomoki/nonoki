@@ -20,9 +20,6 @@
     <ClInclude Include="Game\Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Block.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Item.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
       <Filter>Screen</Filter>
     </ClCompile>
     <ClCompile Include="Game\Game.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Block.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Item.cpp">

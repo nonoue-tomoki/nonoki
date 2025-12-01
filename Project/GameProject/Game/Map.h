@@ -1,24 +1,26 @@
 #pragma once
+#include "Base/Base.h"
+#include "GLLibrary/CImage.h"
+#include "GLLibrary/CInput.h"
 
-#include "../Base/Base.h"
-#include <cmath>
+#define TILE_SIZE (60)
 
-#define TILE_SIZE 32.0f
-#define MAP_WIDTH_TILES 50  
-#define MAP_HEIGHT_TILES 20
-
-class Map : public Base 
-{
-public:
-	Map();
-	~Map() override = default;
-
-	void Collision(Base* b) override {}
-
-	static int GetTile(int tx, int ty);
-
+class Map : public Base {
 private:
-	static int s_mapData[MAP_HEIGHT_TILES][MAP_WIDTH_TILES];
+    CImage m_img;
 
-	static void InitializeMapData();
+    static const int m_data[19][32];
+
+    int m_width;
+    int m_height;
+
+public:
+    Map();
+    ~Map() override;
+
+    void Update() override;
+    void Draw() override;
+    void Collision(Base* b) override;
+
+    int CollisionRect(const CVector2D& pos, const CRect& rect) const;
 };
