@@ -10,6 +10,14 @@
 class Player : public Base {
 private:
     enum {
+        eAnimIdle = 0,
+        eAnimRun,
+        eAnimJumpUp,
+        eAnimJumpDown,
+        eAnimDown,
+    };
+
+    enum {
         eState_Idle,
         eState_Jump,
         eState_Down,

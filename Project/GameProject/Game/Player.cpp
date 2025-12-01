@@ -1,13 +1,58 @@
 #include "Player.h"
 #include "Map.h"
 
+enum {
+    eAnimIdle = 0,
+    eAnimRun,
+    eAnimJumpUp,
+    eAnimJumpDown,
+    eAnimDown,
+};
+
+enum {
+    eState_Idle,
+    eState_Jump,
+    eState_Down,
+};
+    
+static TexAnim _idle[] = {
+    { 0,2 }, 
+    { 1,2 }, 
+    { 2,2 }, 
+    { 3,2 },
+    { 4,2 },
+};
+
+static TexAnim _run[] = {
+    { 10,2 },
+    { 11,2 }, 
+    { 12,2 },
+    { 13,2 }, 
+    { 14,2 }, 
+};
+
+static TexAnim _jump_up[] = {
+    { 20, 1 },
+};
+
+static TexAnim _jump_down[] = {
+    { 30, 1 },
+};
+
+static TexAnimData _anim_data[] = {
+    ANIMDATA(_idle),
+    ANIMDATA(_run),
+    ANIMDATA(_jump_up),
+    ANIMDATA(_jump_down),
+};
+
 Player::Player(const CVector2D& p, bool flip) :
     Base(eType_Player) {
     m_img = COPY_RESOURCE("Player", CImage);
     m_pos_old = m_pos = p;
 
-    m_img.SetSize(60.0f, 60.0f);
-    m_img.SetCenter(60.0f / 2, 60.0f / 2);
+    m_img.SetSize(60, 60);
+    m_img.SetCenter(30, 60);
 
     m_flip = flip;
 
@@ -15,7 +60,10 @@ Player::Player(const CVector2D& p, bool flip) :
 
     m_is_ground = false;
 
-    m_rect = CRect(-(60.0f / 2), -(60.0f / 2), 60.0f / 2, 60.0f / 2);
+    m_rect = CRect(-16, -48, 16, 0);
+
+    m_img.AttachAnimationData(_anim_data, TILE_SIZE, TILE_SIZE);
+    m_img.ChangeAnimation(eAnimIdle, true, 0, false);
 }
 
 Player::~Player() {
@@ -97,6 +145,25 @@ void Player::Update() {
     m_scroll = CVector2D(0, 0);
 
     m_is_ground = false;
+
+    if (m_is_ground) {
+        if (m_vec.x != 0) {
+            m_img.ChangeAnimation(eAnimRun);
+        }
+        else {
+            m_img.ChangeAnimation(eAnimIdle);
+        }
+    }
+    else {
+        if (m_vec.y < 0) {
+            m_img.ChangeAnimation(eAnimJumpUp, false, 0, false);
+        }
+        else {
+            m_img.ChangeAnimation(eAnimJumpDown, false, 0, false);
+        }
+    }
+
+    m_img.UpdateAnimation();
 }
 
 void Player::Draw() {
