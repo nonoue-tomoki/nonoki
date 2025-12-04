@@ -1,8 +1,5 @@
 #pragma once
 #include "Base/Base.h"
-#include "GLLibrary/CInput.h"
-#include "GLLibrary/CImage.h"
-#include "GLLibrary/Utility.h"
 #include "Map.h"
 
 #define DASH_SPEED 10

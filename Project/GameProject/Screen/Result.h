@@ -3,4 +3,11 @@
 
 class Result :public Base {
 
+private:
+	CImage m_img;
+
+public:
+	Result();
+	void Draw();
+	void Update();
 };

@@ -3,6 +3,7 @@
 #include "Game/Player.h"
 #include "Game/Game.h"
 #include "Game/Item.h"
+#include "Game/Enemy.h"
 #include "Screen/Result.h"
 #include "Screen/Title.h"
 
@@ -94,15 +95,13 @@ void Init(void)
 	//ƒQ[ƒ€‹N“®‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
 	//-----------------------------------------------------
 	
-	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png"),60, 60);
-	ADD_RESOURCE("MapTile", CImage::CreateImage("Image/Block.png"), 60, 60);
+	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png"));
+	ADD_RESOURCE("MapTile", CImage::CreateImage("Image/Block.png"));
+	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Enemy.png"));
+	ADD_RESOURCE("Goal", CImage::CreateImage("Image/Goal.png"));
 
-	Base::Add(new Map());
-
-	float start_x = 2.5f * TILE_SIZE;
-	float start_y = 15.5f * TILE_SIZE;
-
-	Base::Add(new Player(CVector2D(start_x, start_y), false));
+	Base::Add(new Title());
+	
 }
 
 

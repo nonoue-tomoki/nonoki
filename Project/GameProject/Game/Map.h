@@ -1,9 +1,7 @@
 #pragma once
 #include "Base/Base.h"
-#include "GLLibrary/CImage.h"
-#include "GLLibrary/CInput.h"
 
-#define TILE_SIZE (60)
+#define TILE_SIZE 60
 
 class Map : public Base {
 private:

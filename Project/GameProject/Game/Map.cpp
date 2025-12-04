@@ -2,7 +2,6 @@
 #include <string.h>
 #include <math.h> 
 
-#define TILE_SIZE (60)
 #define MAP_ROWS (sizeof(m_data) / sizeof(m_data[0]))
 #define MAP_COLS (sizeof(m_data[0]) / sizeof(m_data[0][0]))
 
@@ -27,8 +26,8 @@ const int Map::m_data[19][32] = {
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
@@ -56,12 +55,12 @@ void Map::Update() {
 void Map::Draw() {
     for (int y = 0; y < MAP_ROWS; y++) {
         for (int x = 0; x < MAP_COLS; x++) {
-            if (m_data[y][x] == 1) {
+            if (m_data[y][x] != 0) {
                 CVector2D tile_pos(
                     x * TILE_SIZE + TILE_SIZE / 2,
                     y * TILE_SIZE + TILE_SIZE / 2
                 );
-
+                m_img.SetRect(48 * m_data[y][x], 0, 48 * (m_data[y][x] + 1), 48);
                 m_img.SetPos(GetScreenPos(tile_pos));
                 m_img.Draw();
             }
@@ -88,14 +87,14 @@ int Map::CollisionRect(const CVector2D& pos, const CRect& rect) const {
 
             if (x < 0 || x >= MAP_COLS || y < 0 || y >= MAP_ROWS) continue;
 
-            if (m_data[y][x] == 1) {
+            if (m_data[y][x] != 0) {
                 float t_left = x * TILE_SIZE;
                 float t_top = y * TILE_SIZE;
                 float t_right = (x + 1) * TILE_SIZE;
                 float t_bottom = (y + 1) * TILE_SIZE;
 
                 if (CheckRectCollision(p_left, p_top, p_right, p_bottom, t_left, t_top, t_right, t_bottom)) {
-                    return 1;
+                    return m_data[y][x];
                 }
             }
         }

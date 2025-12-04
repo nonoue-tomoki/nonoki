@@ -21,9 +21,11 @@
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Goal.h" />
     <ClInclude Include="Game\Item.h" />
     <ClInclude Include="Game\Map.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Screen\Result.h" />
     <ClInclude Include="Screen\Title.h" />
@@ -31,9 +33,11 @@
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Goal.cpp" />
     <ClCompile Include="Game\Item.cpp" />
     <ClCompile Include="Game\Map.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Screen\Result.cpp" />
     <ClCompile Include="Screen\Title.cpp" />

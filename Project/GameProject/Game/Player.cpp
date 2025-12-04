@@ -1,8 +1,7 @@
 #include "Player.h"
 #include "Map.h"
+#include "Screen/Result.h"
 #include <cmath>
-#include "GLLibrary/CInput.h"
-#include "GLLibrary/CImage.h"
 
 enum {
     eAnimIdle = 0,
@@ -49,10 +48,10 @@ static TexAnimData _anim_data[] = {
     ANIMDATA(_jump_down),
 };
 
-Player::Player(const CVector2D& p, bool flip) :
+Player::Player(const CVector2D& pos, bool flip) :
     Base(eType_Player) {
     m_img = COPY_RESOURCE("Player", CImage);
-    m_pos_old = m_pos = p;
+    m_pos_old = m_pos = pos;
 
     m_img.SetSize(60, 60);
     m_img.SetCenter(30, 60);
@@ -269,6 +268,17 @@ void Player::Draw() {
 
 
 void Player::Collision(Base* b) {
+    if (b->m_type == eType_Goal) {
+        if (Base::CollisionRect(this, b)) {
+            KillAll();
+            Base::Add(new Result());
+        }
+    }
+    if (b->m_type == eType_Enemy) {
+        if (Base::CollisionRect(this, b)) {
+            SetKill();
+        }
+    }
     if (b->m_type == eType_Map) {
         if (Map* m = dynamic_cast<Map*>(b)) {
             int t;
@@ -278,6 +288,9 @@ void Player::Collision(Base* b) {
                 m_pos.x = m_pos_old.x;
                 m_vec.x = 0;
 
+                if (t > 1) {
+                    SetKill();
+                }
                 if (PUSH(CInput::eButton1)) {
                     m_state = eState_WallGrab;
                     m_wall_dir = t;
