@@ -5,7 +5,7 @@ class Game :public Base
 {
 private:
 	int m_time;
-
+	int m_deathcount;
 
 public:
 	Game();

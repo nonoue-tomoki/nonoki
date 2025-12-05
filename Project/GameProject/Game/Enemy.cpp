@@ -9,9 +9,29 @@ Enemy::Enemy(const CVector2D pos) :Base(eType_Enemy) {
 	m_pos_old = m_pos = pos;
 
 	m_rect = CRect(-30, -60, 30, 0);
+
+	m_tick = 0;
+	m_movespeed = 3;
 }
 
 void Enemy::Update() {
+	m_tick++;
+
+	if (m_tick < 60) {
+		m_pos.x += m_movespeed;
+	}
+	else if (m_tick < 90) {
+		m_pos.y -= m_movespeed;
+	}
+	else if (m_tick < 150) {
+		m_pos.x -= m_movespeed;
+	}
+	else if (m_tick < 180) {
+		m_pos.y += m_movespeed;
+	}
+	else {
+		m_tick = 0;
+	}
 
 }
 

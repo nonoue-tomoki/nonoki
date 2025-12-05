@@ -3,6 +3,7 @@
 
 Title::Title():Base(eType_Scene)
 {
+
 }
 
 void Title::Draw()

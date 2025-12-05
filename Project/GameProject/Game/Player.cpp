@@ -232,7 +232,7 @@ void Player::Update() {
     switch (m_state) {
     case eState_Idle:
         StateIdle();
-        if (m_state != eState_Idle) m_vec.y += GRAVITY;
+        m_vec.y += GRAVITY;
         break;
     case eState_Jump:
         StateJump();
@@ -322,7 +322,11 @@ void Player::Collision(Base* b) {
                         m_state = eState_Idle;
                     }
                 }
+                if (t > 1) {
+                    SetKill();
+                }
             }
+            
         }
     }
 }
