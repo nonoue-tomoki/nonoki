@@ -4,8 +4,8 @@
 class Game :public Base 
 {
 private:
-	int m_time;
-	int m_deathcount;
+	int m_time = 0;
+	int m_deathcount = 0;
 
 public:
 	Game();

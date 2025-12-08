@@ -20,4 +20,12 @@ void Game::Update()
 {
 	m_time++;
 
+	Base* p = Base::FindObject(eType_Player);
+	if (p == NULL) {
+		if (PUSH(CInput::eButton3)) {
+			KillAll();
+			m_deathcount++;
+			Base::Add(new Game());
+		}
+	}
 }

@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Game/Game.h"
 #include "Map.h"
 #include "Screen/Result.h"
 #include <cmath>
@@ -326,7 +327,6 @@ void Player::Collision(Base* b) {
                     SetKill();
                 }
             }
-            
         }
     }
 }

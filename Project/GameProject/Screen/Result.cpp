@@ -1,4 +1,5 @@
 #include "Result.h"
+#include "Game/Game.h"
 
 Result::Result():Base(eType_Scene){
 
