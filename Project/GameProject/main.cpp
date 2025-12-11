@@ -5,6 +5,8 @@
 #include "Game/Item.h"
 #include "Game/Enemy.h"
 #include "Game/Goal.h"
+#include "Game/AreaChange.h"
+#include "Game/Field.h"
 #include "Screen/Result.h"
 #include "Screen/Title.h"
 

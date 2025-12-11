@@ -15,6 +15,7 @@ enum {
 enum {
     eState_Idle,
     eState_Jump,
+    eState_WallGrab,
     eState_Down,
 };
     

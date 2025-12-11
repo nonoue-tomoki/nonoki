@@ -6,6 +6,7 @@ private:
 	CImage m_img;
 	int m_movespeed;
 	int m_tick;
+
 public:
 	Enemy(const CVector2D pos);
 	void Update();
