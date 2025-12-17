@@ -1,6 +1,7 @@
 #include "Player.h"
-#include "Game/Game.h"
 #include "Map.h"
+#include "AreaChange.h"
+#include "Game/Game.h"
 #include "Screen/Result.h"
 #include <cmath>
 
@@ -287,12 +288,28 @@ void Player::Collision(Base* b) {
 
             t = m->CollisionRect(CVector2D(m_pos.x, m_pos_old.y), m_rect);
             if (t != 0) {
+
+                if (t == 4 || t == 5) {
+                    m_next_area = true;
+                    int current_area = m->GetAreaID();
+
+                    AreaChange::CalculateNextArea(
+                        current_area,
+                        t,
+                        m_pos,
+                        m_next_area_id,
+                        m_next_pos
+                    );
+                    return;
+                }
+
                 m_pos.x = m_pos_old.x;
                 m_vec.x = 0;
 
-                if (t > 1) {
+                if (t == 2) {
                     SetKill();
                 }
+
                 if (PUSH(CInput::eButton1)) {
                     m_state = eState_WallGrab;
                     m_wall_dir = t;
@@ -313,8 +330,24 @@ void Player::Collision(Base* b) {
 
             t = m->CollisionRect(CVector2D(m_pos_old.x, m_pos.y), m_rect);
             if (t != 0) {
+
+                if (t == 4 || t == 5) {
+                    m_next_area = true;
+                    int current_area = m->GetAreaID();
+
+                    AreaChange::CalculateNextArea(
+                        current_area,
+                        t,
+                        m_pos,
+                        m_next_area_id,
+                        m_next_pos
+                    );
+                    return;
+                }
+
                 m_pos.y = m_pos_old.y;
                 m_vec.y = 0;
+
                 if (m_vec.y >= 0) {
                     m_is_ground = true;
                     m_jump_count = 0;

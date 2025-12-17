@@ -1,19 +1,20 @@
 #pragma once
 #include "Base/Base.h"
 
-#define TILE_SIZE 60
+#define MAP_TIP_SIZE 60
 
 class Map : public Base {
 private:
     CImage m_img;
 
-    static const int m_data[19][32];
+    int m_data[19][32];
+    int m_area_id;
 
     int m_width;
     int m_height;
 
 public:
-    Map();
+    Map(int area);
     ~Map() override;
 
     void Update() override;
@@ -21,4 +22,6 @@ public:
     void Collision(Base* b) override;
 
     int CollisionRect(const CVector2D& pos, const CRect& rect) const;
+
+    int GetAreaID() const { return m_area_id; }
 };

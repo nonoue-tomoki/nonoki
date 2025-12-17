@@ -35,6 +35,10 @@ private:
     const static int MAX_JUMP = 2;
     bool m_can_dash;
 
+    bool m_next_area = false;
+    int m_next_area_id = 0;
+    CVector2D m_next_pos;
+
     void PlayerDash();
 
 public:
@@ -49,4 +53,14 @@ public:
     void StateJump();
     void StateWallGrab();
     void StateDown();
+
+    bool GetNextAreaFlag() const {
+        return m_next_area;
+    }
+    int GetNextAreaID() const { 
+        return m_next_area_id;
+    }
+    const CVector2D& GetNextPos() const {
+        return m_next_pos; 
+    }
 };

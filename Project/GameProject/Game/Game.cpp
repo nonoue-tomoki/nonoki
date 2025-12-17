@@ -6,26 +6,65 @@
 #include "../Screen/Result.h"
 #include "../Screen/Title.h"
 
-Game::Game() :Base(eType_UI) 
+int Game::s_next_area_id = 11;
+CVector2D Game::s_next_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
+
+int Game::s_current_area_id = 11;
+CVector2D Game::s_restart_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
+
+Game::Game() :Base(eType_UI)
 {
-
-	Base::Add(new Map());
-	Base::Add(new Player(CVector2D(2.5f * TILE_SIZE, 15.5f * TILE_SIZE), false));
-	Base::Add(new Enemy(CVector2D(10.5f * TILE_SIZE, 15.5f * TILE_SIZE)));
-	Base::Add(new Goal(CVector2D(6.5f * TILE_SIZE, 2.5f * TILE_SIZE)));
-
+    LoadArea(s_next_area_id, s_next_pos);
 }
 
 void Game::Update()
 {
-	m_time++;
+    m_time++;
 
-	Base* p = Base::FindObject(eType_Player);
-	if (p == NULL) {
-		if (PUSH(CInput::eButton3)) {
-			KillAll();
-			m_deathcount++;
-			Base::Add(new Game());
-		}
-	}
+    Player* p = dynamic_cast<Player*>(Base::FindObject(eType_Player));
+
+    if (p && p->GetNextAreaFlag()) {
+        s_next_area_id = p->GetNextAreaID();
+        s_next_pos = p->GetNextPos();
+
+        for (auto& obj : m_list) {
+            if (obj != this) {
+                obj->m_kill = true;
+            }
+        }
+
+        LoadArea(s_next_area_id, s_next_pos);
+
+        return;
+    }
+
+    if (p == NULL) {
+        if (PUSH(CInput::eButton3)) {
+            m_deathcount++;
+
+            s_next_area_id = s_current_area_id;
+            s_next_pos = s_restart_pos;
+
+            for (auto& obj : m_list) {
+                if (obj != this) obj->m_kill = true;
+            }
+
+            LoadArea(s_next_area_id, s_next_pos);
+        }
+    }
+}
+
+void Game::LoadArea(int area_id, const CVector2D& player_pos) {
+    Base::Add(new Map(area_id));
+
+    Base::Add(new Player(player_pos, false));
+
+    if (area_id == 11) {
+        Base::Add(new Enemy(CVector2D(10.5f * MAP_TIP_SIZE, 15.5f * MAP_TIP_SIZE)));
+        Base::Add(new Goal(CVector2D(6.5f * MAP_TIP_SIZE, 2.5f * MAP_TIP_SIZE)));
+    }
+    else if (area_id == 12) {
+    }
+    else if (area_id == 21) {
+    }
 }
