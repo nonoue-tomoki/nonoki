@@ -32,9 +32,7 @@ void Game::Update()
                 obj->m_kill = true;
             }
         }
-
         LoadArea(s_next_area_id, s_next_pos);
-
         return;
     }
 
@@ -42,14 +40,12 @@ void Game::Update()
         if (PUSH(CInput::eButton3)) {
             m_deathcount++;
 
+            KillAll();
+
             s_next_area_id = s_current_area_id;
             s_next_pos = s_restart_pos;
 
-            for (auto& obj : m_list) {
-                if (obj != this) obj->m_kill = true;
-            }
-
-            LoadArea(s_next_area_id, s_next_pos);
+            Base::Add(new Game());
         }
     }
 }
