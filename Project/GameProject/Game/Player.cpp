@@ -1,7 +1,8 @@
 #include "Player.h"
+#include "Moon.h"
 #include "Map.h"
 #include "AreaChange.h"
-#include "Game/Game.h"
+#include "Game.h"
 #include "Screen/Result.h"
 #include <cmath>
 
@@ -19,21 +20,21 @@ enum {
     eState_WallGrab,
     eState_Down,
 };
-    
+
 static TexAnim _idle[] = {
-    { 0,2 }, 
-    { 1,2 }, 
-    { 2,2 }, 
+    { 0,2 },
+    { 1,2 },
+    { 2,2 },
     { 3,2 },
     { 4,2 },
 };
 
 static TexAnim _run[] = {
     { 10,2 },
-    { 11,2 }, 
+    { 11,2 },
     { 12,2 },
-    { 13,2 }, 
-    { 14,2 }, 
+    { 13,2 },
+    { 14,2 },
 };
 
 static TexAnim _jump_up[] = {
@@ -64,6 +65,8 @@ Player::Player(const CVector2D& pos, bool flip) :
     m_wall_dir = 0;
     m_jump_count = 0;
     m_can_dash = true;
+
+    m_dash_keep = 0;
 
     m_rect = CRect(-16, -48, 16, 0);
 
@@ -121,14 +124,20 @@ void Player::PlayerDash() {
         float dash_dir = m_flip ? -1.0f : 1.0f;
         m_vec.x = dash_dir * DASH_SPEED;
     }
-}
 
+    m_dash_keep = 10;
+}
 
 void Player::StateIdle() {
     if (PUSH(CInput::eButton2)) {
         PlayerDash();
         m_state = eState_Jump;
         return;
+    }
+
+    bool input_lr = HOLD(CInput::eLeft) || HOLD(CInput::eRight);
+    if (input_lr) {
+        m_dash_keep = 0;
     }
 
     if (HOLD(CInput::eLeft)) {
@@ -140,7 +149,11 @@ void Player::StateIdle() {
         m_flip = false;
     }
     else {
-        m_vec.x = 0;
+        if (m_dash_keep <= 0) {
+            float friction = (m_ground_tile == TILE_ICE) ? ICE_FRICTION : GROUND_FRICTION;
+            m_vec.x *= friction;
+            if (fabs(m_vec.x) < 0.05f) m_vec.x = 0.0f;
+        }
     }
 
     if (PUSH(CInput::eButton3)) {
@@ -179,7 +192,7 @@ void Player::StateJump() {
 
 void Player::StateWallGrab() {
     m_vec.x = 0;
-        
+
     if (PUSH(CInput::eButton3)) {
         m_vec.x = -m_wall_dir * WALL_KICK_POWER_X;
         m_vec.y = -WALL_KICK_POWER_Y;
@@ -226,11 +239,14 @@ void Player::StateWallGrab() {
 void Player::StateDown() {
 }
 
-
 void Player::Update() {
     m_pos_old = m_pos;
 
     m_is_ground = false;
+
+    if (m_dash_keep > 0) {
+        m_dash_keep--;
+    }
 
     switch (m_state) {
     case eState_Idle:
@@ -251,6 +267,15 @@ void Player::Update() {
 
     m_pos += m_vec;
 
+    const float margin_x = 120.0f;
+    const float margin_y = 240.0f;
+
+    if (m_pos.x < -margin_x || m_pos.x > SCREEN_WIDTH + margin_x ||
+        m_pos.y < -margin_y || m_pos.y > SCREEN_HEIGHT + margin_y) {
+        SetKill();
+        return;
+    }
+
     if (m_state == eState_Idle || m_state == eState_Jump) {
         if (m_is_ground) {
             m_img.ChangeAnimation(m_vec.x != 0 ? eAnimRun : eAnimIdle);
@@ -269,12 +294,19 @@ void Player::Draw() {
     m_img.Draw();
 }
 
-
 void Player::Collision(Base* b) {
     if (b->m_type == eType_Goal) {
         if (Base::CollisionRect(this, b)) {
             KillAll();
-            Base::Add(new Result());
+            Base::Add(new Result(true));
+        }
+    }
+    if (b->m_type == eType_Object) {
+        if (Base::CollisionRect(this, b)) {
+            Moon* moon = dynamic_cast<Moon*>(b);
+            if (moon) {
+                b->SetKill();
+            }
         }
     }
     if (b->m_type == eType_Enemy) {
@@ -284,6 +316,14 @@ void Player::Collision(Base* b) {
     }
     if (b->m_type == eType_Map) {
         if (Map* m = dynamic_cast<Map*>(b)) {
+            if (m_state == eState_WallGrab && m_wall_dir != 0) {
+                int side = m->CollisionRect(CVector2D(m_pos.x + (float)m_wall_dir * 4.0f, m_pos.y), m_rect);
+                if (side != TILE_SOLID) {
+                    m_state = eState_Jump;
+                    m_wall_dir = 0;
+                }
+            }
+
             int t;
 
             t = m->CollisionRect(CVector2D(m_pos.x, m_pos_old.y), m_rect);
@@ -303,30 +343,36 @@ void Player::Collision(Base* b) {
                     return;
                 }
 
+                int hit_dir = 0;
+                if (m_pos.x > m_pos_old.x) hit_dir = 1;
+                else if (m_pos.x < m_pos_old.x) hit_dir = -1;
+
                 m_pos.x = m_pos_old.x;
                 m_vec.x = 0;
 
-                if (t == 2) {
+                if (t == TILE_SPIKE) {
                     SetKill();
                 }
 
-                if (PUSH(CInput::eButton1)) {
+                if (t == TILE_SOLID && PUSH(CInput::eButton1) && hit_dir != 0) {
                     m_state = eState_WallGrab;
-                    m_wall_dir = t;
-                    m_flip = (t == 1);
+                    m_wall_dir = hit_dir;
+                    m_flip = (hit_dir == -1);
                     m_vec.y = 0;
                     return;
                 }
 
-                if (m_state == eState_Jump) {
-                    if ((t == 1 && HOLD(CInput::eLeft)) || (t == -1 && HOLD(CInput::eRight))) {
+                if (m_state == eState_Jump && t == TILE_SOLID && hit_dir != 0) {
+                    if ((hit_dir == 1 && HOLD(CInput::eRight)) || (hit_dir == -1 && HOLD(CInput::eLeft))) {
                         m_state = eState_WallGrab;
-                        m_wall_dir = t;
-                        m_flip = (t == 1);
+                        m_wall_dir = hit_dir;
+                        m_flip = (hit_dir == -1);
                         return;
                     }
                 }
             }
+
+            float vy_before = m_vec.y;
 
             t = m->CollisionRect(CVector2D(m_pos_old.x, m_pos.y), m_rect);
             if (t != 0) {
@@ -346,10 +392,20 @@ void Player::Collision(Base* b) {
                 }
 
                 m_pos.y = m_pos_old.y;
+
+                if (t == TILE_SPRING && vy_before >= 0.0f) {
+                    m_vec.y = -SPRING_POWER;
+                    m_state = eState_Jump;
+                    m_is_ground = false;
+                    m_jump_count = 0;
+                    return;
+                }
+
                 m_vec.y = 0;
 
-                if (m_vec.y >= 0) {
+                if (vy_before >= 0.0f) {
                     m_is_ground = true;
+                    m_ground_tile = t;
                     m_jump_count = 0;
                     m_wall_dir = 0;
                     m_can_dash = true;
@@ -357,7 +413,8 @@ void Player::Collision(Base* b) {
                         m_state = eState_Idle;
                     }
                 }
-                if (t > 1) {
+
+                if (t == TILE_SPIKE) {
                     SetKill();
                 }
             }

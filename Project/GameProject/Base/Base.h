@@ -4,7 +4,6 @@
 
 enum {
     eType_Field,
-    eType_Map,
     eType_Door,
     eType_AreaChange,
     eType_Player,
@@ -12,6 +11,7 @@ enum {
     eType_Object,
     eType_Goal,
     eType_Effect,
+    eType_Map,
     eType_UI,
     eType_Scene,
 };

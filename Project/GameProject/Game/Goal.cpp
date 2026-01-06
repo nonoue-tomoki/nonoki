@@ -5,7 +5,7 @@ Goal::Goal(const CVector2D& pos) :Base(eType_Goal)
 	m_pos = pos;
 	m_img.SetSize(120, 120);
 	m_img.SetCenter(60, 120);
-	m_rect = CRect(-60, -120, 60, 0);
+	m_rect = CRect(-40, -120, 40, 0);
 	m_is_goal = false;
 }
 
@@ -13,5 +13,5 @@ void Goal::Draw()
 {
 	m_img.SetPos(GetScreenPos(m_pos));
 	m_img.Draw();
-	DrawRect();
+	//DrawRect();
 }

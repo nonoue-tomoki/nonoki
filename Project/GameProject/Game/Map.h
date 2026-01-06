@@ -3,6 +3,16 @@
 
 #define MAP_TIP_SIZE 60
 
+enum TileId {
+    TILE_EMPTY = 0,
+    TILE_SOLID = 1,
+    TILE_SPIKE = 2,
+    TILE_ICE = 3,
+    TILE_EXIT_UP = 4,
+    TILE_EXIT_RIGHT = 5,
+    TILE_SPRING = 6,
+};
+
 class Map : public Base {
 private:
     CImage m_img;

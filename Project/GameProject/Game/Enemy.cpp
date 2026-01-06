@@ -8,7 +8,7 @@ Enemy::Enemy(const CVector2D pos) :Base(eType_Enemy) {
 
 	m_pos_old = m_pos = pos;
 
-	m_rect = CRect(-30, -60, 30, 0);
+	m_rect = CRect(-25, -50, 25, 0);
 
 	m_tick = 0;
 	m_movespeed = 3;
@@ -38,7 +38,7 @@ void Enemy::Update() {
 void Enemy::Draw() {
 	m_img.SetPos(GetScreenPos(m_pos));
 	m_img.Draw();
-	DrawRect();
+	//DrawRect();
 }
 
 void Enemy::Collision(Base* b) {

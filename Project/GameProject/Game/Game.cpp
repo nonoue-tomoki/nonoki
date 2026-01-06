@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Moon.h"
 #include "Goal.h"
 #include "Map.h"
 #include "Field.h"
@@ -23,10 +24,8 @@ void Game::LoadArea(int area_id, const CVector2D& player_pos)
     s_current_area_id = area_id;
     s_restart_pos = player_pos;
 
-    if (area_id == 11) {
-        // —á: Base::Add(new Enemy(...));
-    }
 }
+    
 
 void Game::Update()
 {

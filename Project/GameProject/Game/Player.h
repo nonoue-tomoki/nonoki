@@ -9,6 +9,11 @@
 #define WALL_KICK_POWER_X 10
 #define WALL_KICK_POWER_Y 12
 
+#define GROUND_FRICTION 0.80f
+#define ICE_FRICTION    0.98f
+
+#define SPRING_POWER 16
+
 class Player : public Base {
 private:
     enum {
@@ -26,6 +31,8 @@ private:
         eState_Down,
     };
     int m_state;
+    Map* m_map = nullptr;
+    bool m_touch_wall = false;
 
     CImage m_img;
     bool m_flip;
@@ -34,6 +41,9 @@ private:
     int m_jump_count;
     const static int MAX_JUMP = 2;
     bool m_can_dash;
+    int m_dash_keep = 0;
+
+    int m_ground_tile = TILE_SOLID;
 
     bool m_next_area = false;
     int m_next_area_id = 0;
@@ -57,10 +67,10 @@ public:
     bool GetNextAreaFlag() const {
         return m_next_area;
     }
-    int GetNextAreaID() const { 
+    int GetNextAreaID() const {
         return m_next_area_id;
     }
     const CVector2D& GetNextPos() const {
-        return m_next_pos; 
+        return m_next_pos;
     }
 };

@@ -3,9 +3,11 @@
 
 class Field :public Base {
 private:
-	CImage m_img;
 
+	CImage m_img;
+	
 public:
+
 	Field();
 	void Draw();
 };
