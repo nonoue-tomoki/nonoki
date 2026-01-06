@@ -102,6 +102,7 @@ void Init(void)
 	ADD_RESOURCE("MapTile", CImage::CreateImage("Image/Block.png"));
 	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Enemy.png"));
 	ADD_RESOURCE("Goal", CImage::CreateImage("Image/Goal.png"));
+	ADD_RESOURCE("Background", CImage::CreateImage("Image/BackGround.png"));
 
 	Base::Add(new Title());
 	

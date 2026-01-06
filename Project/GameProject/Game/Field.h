@@ -8,6 +8,4 @@ private:
 public:
 	Field();
 	void Draw();
-	void Update();
-
 };

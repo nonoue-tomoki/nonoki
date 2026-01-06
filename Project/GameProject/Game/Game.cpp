@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Goal.h"
 #include "Map.h"
+#include "Field.h"
 #include "../Screen/Result.h"
 #include "../Screen/Title.h"
 
@@ -12,9 +13,19 @@ CVector2D Game::s_next_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 int Game::s_current_area_id = 11;
 CVector2D Game::s_restart_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
-Game::Game() :Base(eType_UI)
+
+void Game::LoadArea(int area_id, const CVector2D& player_pos)
 {
-    LoadArea(s_next_area_id, s_next_pos);
+    Base::Add(new Map(area_id));
+    Base::Add(new Field);
+    Base::Add(new Player(player_pos, false));
+
+    s_current_area_id = area_id;
+    s_restart_pos = player_pos;
+
+    if (area_id == 11) {
+        // —á: Base::Add(new Enemy(...));
+    }
 }
 
 void Game::Update()
@@ -50,17 +61,8 @@ void Game::Update()
     }
 }
 
-void Game::LoadArea(int area_id, const CVector2D& player_pos) {
-    Base::Add(new Map(area_id));
-
-    Base::Add(new Player(player_pos, false));
-
-    if (area_id == 11) {
-        Base::Add(new Enemy(CVector2D(10.5f * MAP_TIP_SIZE, 15.5f * MAP_TIP_SIZE)));
-        Base::Add(new Goal(CVector2D(6.5f * MAP_TIP_SIZE, 2.5f * MAP_TIP_SIZE)));
-    }
-    else if (area_id == 12) {
-    }
-    else if (area_id == 21) {
-    }
+Game::Game() :Base(eType_UI)
+{
+    LoadArea(s_next_area_id, s_next_pos);
 }
+
