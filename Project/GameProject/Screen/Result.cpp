@@ -15,12 +15,21 @@ void Result::Draw()
 {
     m_img.Draw();
 
-    if (m_clear) {
-        m_font.Draw(760, 360, 0.463f, 0.522f, 1.0f, "CLEAR");
-    }
+    int sec = Game::s_time_frame / DEFAULT_FPS;
+    int min = sec / 60;
+    sec %= 60;
 
-    m_font.Draw(840, 560, 0.463f, 0.522f, 1.0f, "Title : Z");
+    float r = 0.463f;
+    float g = 0.522f;
+    float b = 1.0f;
+
+    FONT_T()->Draw(960, 480, r, g, b, "Result Clear");
+
+    FONT_T()->Draw(960, 540, r, g, b, "Time : %02d:%02d", min, sec);
+
+    FONT_T()->Draw(960, 600, r, g, b, "Deaths : %d", Game::s_death_count);
 }
+
 
 void Result::Update()
 {

@@ -14,6 +14,8 @@ CVector2D Game::s_next_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 int Game::s_current_area_id = 11;
 CVector2D Game::s_restart_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
+int Game::s_death_count = 0;
+int Game::s_time_frame = 0;
 
 void Game::LoadArea(int area_id, const CVector2D& player_pos)
 {
@@ -29,7 +31,7 @@ void Game::LoadArea(int area_id, const CVector2D& player_pos)
 
 void Game::Update()
 {
-    m_time++;
+    s_time_frame++;
 
     Player* p = dynamic_cast<Player*>(Base::FindObject(eType_Player));
 
@@ -48,7 +50,7 @@ void Game::Update()
 
     if (p == NULL) {
         if (PUSH(CInput::eButton3)) {
-            m_deathcount++;
+            s_death_count++;
 
             KillAll();
 
@@ -65,3 +67,8 @@ Game::Game() :Base(eType_UI)
     LoadArea(s_next_area_id, s_next_pos);
 }
 
+void Game::Restart()
+{
+    s_death_count++;
+    LoadArea(s_current_area_id, s_restart_pos);
+}

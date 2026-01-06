@@ -10,8 +10,6 @@
 class Game :public Base 
 {
 private:
-	int m_time = 0;
-	int m_deathcount = 0;
 
 	static int s_next_area_id;
 	static CVector2D s_next_pos;
@@ -21,7 +19,11 @@ private:
 
 	static void LoadArea(int area_id, const CVector2D& player_pos);
 
+	void Restart();
+
 public:
+	static int s_death_count;
+	static int s_time_frame;
 	Game();
 	void Update();
 };

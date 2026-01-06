@@ -105,10 +105,6 @@ void Init(void)
 	ADD_RESOURCE("Goal", CImage::CreateImage("Image/Goal.png"));
 	ADD_RESOURCE("Background", CImage::CreateImage("Image/BackGround.png"));
 	ADD_RESOURCE("Title", CImage::CreateImage("Image/Title.png"));
-	ADD_RESOURCE("Clear", CImage::CreateImage("Image/Clear.png"));
-	ADD_RESOURCE("H_Clear", CImage::CreateImage("Image/Hard_Clear.png"));
-	ADD_RESOURCE("C_Logo", CImage::CreateImage("Image/Clear_Logo.png"));
-	ADD_RESOURCE("PC_Logo", CImage::CreateImage("Image/PClear_Logo.png"));
 
 	Base::Add(new Title());
 	
