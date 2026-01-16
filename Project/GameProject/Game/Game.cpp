@@ -8,14 +8,15 @@
 #include "../Screen/Result.h"
 #include "../Screen/Title.h"
 
-int Game::s_next_area_id = 11;
+int Game::s_next_area_id = 41;
 CVector2D Game::s_next_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
-int Game::s_current_area_id = 11;
+int Game::s_current_area_id = 41;
 CVector2D Game::s_restart_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
 int Game::s_death_count = 0;
 int Game::s_time_frame = 0;
+int Game::s_moon_count = 0;
 
 void Game::LoadArea(int area_id, const CVector2D& player_pos)
 {

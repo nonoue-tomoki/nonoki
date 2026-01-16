@@ -38,6 +38,9 @@
     <ClInclude Include="Game\Moon.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Pause\Pause.h">
+      <Filter>Pause</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -77,6 +80,9 @@
     <ClCompile Include="Game\Moon.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Pause\Pause.cpp">
+      <Filter>Pause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -87,6 +93,9 @@
     </Filter>
     <Filter Include="Screen">
       <UniqueIdentifier>{fa4593bf-1f4d-4dc5-9f72-b793bb5e864a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pause">
+      <UniqueIdentifier>{21a2be01-7567-4e20-a872-7ca73867bbb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

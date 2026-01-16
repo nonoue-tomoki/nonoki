@@ -9,6 +9,7 @@
 #include "Game/Field.h"
 #include "Screen/Result.h"
 #include "Screen/Title.h"
+#include "Pause/Pause.h"
 
 
 void MainLoop(void) {
@@ -16,11 +17,12 @@ void MainLoop(void) {
 	//ゲーム中の動きはここに書く
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
-	Base::DrawAll();
-	Base::UpdateAll();
-	Base::CheckKillAll();
-	Base::CollisionAll();
-
+	if (!Pause::Update()) {
+		Base::DrawAll();
+		Base::UpdateAll();
+		Base::CheckKillAll();
+		Base::CollisionAll();
+	}
 
 
 }
@@ -53,6 +55,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton4, VK_LSHIFT);
 	CInput::SetButton(0, CInput::eButton5, VK_SPACE);
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
+	CInput::SetButton(0, CInput::eButton13, VK_ESCAPE);
 	CInput::SetButton(0, CInput::eUp, VK_UP);
 	CInput::SetButton(0, CInput::eDown, VK_DOWN);
 	CInput::SetButton(0, CInput::eLeft, VK_LEFT);
@@ -218,8 +221,8 @@ int __main(int* argcp, char** argv) {
 	GL::hWnd = WindowFromDC(glDc);
 	
 	//前面ボーダー無し
-	//SetWindowLong(GL::hWnd, GWL_STYLE, WS_POPUP);
-	//SetWindowPos(GL::hWnd, HWND_TOP, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_SHOWWINDOW);
+	SetWindowLong(GL::hWnd, GWL_STYLE, WS_POPUP);
+	SetWindowPos(GL::hWnd, HWND_TOP, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_SHOWWINDOW);
 	Init();
 
 
@@ -243,11 +246,11 @@ int __main(int* argcp, char** argv) {
 		CFPS::Wait();
 
 		glfwPollEvents();
-		if (glfwGetKey(GL::window, GLFW_KEY_ESCAPE)) {
+		/* if (glfwGetKey(GL::window, GLFW_KEY_ESCAPE)) {
 			GL::isQuit = true;
 			glfwSetWindowShouldClose(GL::window, GL_TRUE);
 		}
-
+		*/
 	}
 
 	glfwTerminate();

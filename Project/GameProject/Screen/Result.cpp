@@ -23,11 +23,10 @@ void Result::Draw()
     float g = 0.522f;
     float b = 1.0f;
 
-    FONT_T()->Draw(960, 480, r, g, b, "Result Clear");
-
+    FONT_T()->Draw(960, 480, r, g, b, "Clear");
     FONT_T()->Draw(960, 540, r, g, b, "Time : %02d:%02d", min, sec);
-
     FONT_T()->Draw(960, 600, r, g, b, "Deaths : %d", Game::s_death_count);
+    FONT_T()->Draw(960, 660, r, g, b, "Moons : %d / 5", Game::s_moon_count);
 }
 
 

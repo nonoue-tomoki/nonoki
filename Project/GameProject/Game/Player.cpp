@@ -23,18 +23,10 @@ enum {
 
 static TexAnim _idle[] = {
     { 0,2 },
-    { 1,2 },
-    { 2,2 },
-    { 3,2 },
-    { 4,2 },
 };
 
 static TexAnim _run[] = {
     { 10,2 },
-    { 11,2 },
-    { 12,2 },
-    { 13,2 },
-    { 14,2 },
 };
 
 static TexAnim _jump_up[] = {
@@ -301,19 +293,23 @@ void Player::Collision(Base* b) {
             Base::Add(new Result(true));
         }
     }
+
     if (b->m_type == eType_Object) {
         if (Base::CollisionRect(this, b)) {
             Moon* moon = dynamic_cast<Moon*>(b);
             if (moon) {
+                Game::s_moon_count++;
                 b->SetKill();
             }
         }
     }
+
     if (b->m_type == eType_Enemy) {
         if (Base::CollisionRect(this, b)) {
             SetKill();
         }
     }
+
     if (b->m_type == eType_Map) {
         if (Map* m = dynamic_cast<Map*>(b)) {
             if (m_state == eState_WallGrab && m_wall_dir != 0) {
@@ -398,6 +394,7 @@ void Player::Collision(Base* b) {
                     m_state = eState_Jump;
                     m_is_ground = false;
                     m_jump_count = 0;
+                    m_can_dash = true;
                     return;
                 }
 

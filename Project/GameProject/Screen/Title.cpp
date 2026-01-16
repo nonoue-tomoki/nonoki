@@ -29,6 +29,11 @@ void Title::Update()
 	if (PUSH(CInput::eButton3))
 	{
 		KillAll();
+
+		Game::s_time_frame = 0;
+		Game::s_death_count = 0;
+		Game::s_moon_count = 0;
+		
 		Base::Add(new Game());
 	}
 }

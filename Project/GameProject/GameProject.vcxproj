@@ -30,6 +30,7 @@
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Pause\Pause.h" />
     <ClInclude Include="Screen\Result.h" />
     <ClInclude Include="Screen\Title.h" />
   </ItemGroup>
@@ -45,6 +46,7 @@
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pause\Pause.cpp" />
     <ClCompile Include="Screen\Result.cpp" />
     <ClCompile Include="Screen\Title.cpp" />
   </ItemGroup>

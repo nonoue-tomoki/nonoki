@@ -24,6 +24,8 @@ private:
 public:
 	static int s_death_count;
 	static int s_time_frame;
+	static int s_moon_count;
+
 	Game();
 	void Update();
 };
