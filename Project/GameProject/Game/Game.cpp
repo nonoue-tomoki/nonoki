@@ -8,10 +8,10 @@
 #include "../Screen/Result.h"
 #include "../Screen/Title.h"
 
-int Game::s_next_area_id = 41;
+int Game::s_next_area_id = 11;
 CVector2D Game::s_next_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
-int Game::s_current_area_id = 41;
+int Game::s_current_area_id = 11;
 CVector2D Game::s_restart_pos = CVector2D(SPAWN_X_LEFT, SPAWN_Y_BOTTOM);
 
 int Game::s_death_count = 0;
